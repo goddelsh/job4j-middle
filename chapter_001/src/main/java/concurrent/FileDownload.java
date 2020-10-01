@@ -41,7 +41,8 @@ public class FileDownload {
             String fileName = attr.getUrl().substring(attr.getUrl().lastIndexOf('/') + 1);
             try (BufferedInputStream in = new BufferedInputStream(new URL(attr.getUrl()).openStream());
                  FileOutputStream fileOutputStream =
-                         new FileOutputStream(fileName.length() > 0 ? fileName : "file".concat(String.valueOf(System.currentTimeMillis())))) {
+                         new FileOutputStream(
+                                 fileName.length() > 0 ? fileName : "file".concat(String.valueOf(System.currentTimeMillis())))) {
                 byte[] dataBuffer = new byte[attr.getDelay()];
                 int bytesRead;
                 while ((bytesRead = in.read(dataBuffer, 0, attr.getDelay())) != -1) {
