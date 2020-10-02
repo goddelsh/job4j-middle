@@ -5,6 +5,25 @@ import java.net.URL;
 
 public class FileDownload {
 
+    final private Attributes attr;
+
+    public FileDownload(String[] args) {
+        this.attr = parseArgs(args);
+    }
+
+    boolean startDownloading() throws InterruptedException {
+        boolean result = attr.isValid();
+        if (result) {
+            Downloader downloader = new Downloader();
+            Thread thread = new Thread(downloader, "Download process");
+            thread.start();
+            while (thread.isAlive()) {
+                System.out.print("\r Loading ... ");
+            }
+        }
+        return result;
+    }
+
     private static class Attributes {
         private String url;
         private int delay;
@@ -35,9 +54,10 @@ public class FileDownload {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        Attributes attr = parseArgs(args);
-        if (attr.isValid()) {
+    private class Downloader implements Runnable {
+
+        @Override
+        public void run() {
             String fileName = attr.getUrl().substring(attr.getUrl().lastIndexOf('/') + 1);
             try (BufferedInputStream in = new BufferedInputStream(new URL(attr.getUrl()).openStream());
                  FileOutputStream fileOutputStream =
@@ -46,19 +66,28 @@ public class FileDownload {
                 byte[] dataBuffer = new byte[attr.getDelay()];
                 int bytesRead;
                 while ((bytesRead = in.read(dataBuffer, 0, attr.getDelay())) != -1) {
-                    System.out.print("\r Loading ... ");
                     fileOutputStream.write(dataBuffer, 0, bytesRead);
                     Thread.sleep(1000);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } else {
+        }
+    }
+
+
+    public static void main(String[] args) throws Exception {
+
+        FileDownload fileDownload = new FileDownload(args);
+
+        if (!fileDownload.startDownloading()) {
             System.out.println("Wrong params!");
         }
     }
 
-    static public Attributes parseArgs(String[] arg) {
+    private Attributes parseArgs(String[] arg) {
         Attributes result = new Attributes();
         if (arg.length > 1) {
             if (arg[0].length() > 0) {
