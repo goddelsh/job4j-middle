@@ -1,5 +1,8 @@
 package linked;
 
+import net.jcip.annotations.ThreadSafe;
+
+@ThreadSafe
 public class Node<T> {
     final private Node next;
     final private T value;
