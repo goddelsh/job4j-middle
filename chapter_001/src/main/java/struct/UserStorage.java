@@ -53,9 +53,11 @@ public class UserStorage {
     }
 
     public synchronized void transfer(int fromId, int toId, int amount) throws IllegalAccessException {
-        if (this.users.containsKey(fromId) && this.users.containsKey(toId)) {
-            this.users.get(fromId).setAmount(this.users.get(fromId).getAmount() - amount);
-            this.users.get(toId).setAmount(this.users.get(toId).getAmount() + amount);
+        User fromUser = this.users.get(fromId);
+        User toUser = this.users.get(toId);
+        if (fromUser != null && toUser != null && fromUser.getAmount() >= amount) {
+            fromUser.setAmount(fromUser.getAmount() - amount);
+            toUser.setAmount(toUser.getAmount() + amount);
         } else {
             throw new IllegalAccessException("User id is inaccessible!");
         }
