@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -58,6 +59,56 @@ public class SimpleBlockingQueueTest {
         producer.start();
         consumer.start();
         producer.join();
+        consumer.join();
+        assertThat(producerList, is(List.of(1, 2, 3, 4, 5)));
+        assertThat(consumerList, is(List.of(1, 2, 3, 4, 5)));
+    }
+
+    @Test
+    public void testBlockongQueueWithExtendConsumerStop() throws InterruptedException {
+        SimpleBlockingQueue<Integer> queue  = new SimpleBlockingQueue<>();
+        List<Integer> producerList = new CopyOnWriteArrayList<>();
+        List<Integer> consumerList = new CopyOnWriteArrayList<>();
+        Thread producer = new Thread(
+                () -> {
+                    try {
+                        System.out.println(Thread.currentThread().getName() + " started");
+                        for (int i = 0; i < 5; i++) {
+                            producerList.add(i + 1);
+                            queue.offer(i + 1);
+                            System.out.println(Thread.currentThread().getName() + " insert " + i);
+                            if (i % 3 == 0) {
+                                Thread.sleep(100);
+                            }
+                        }
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                },
+                "Master"
+        );
+        Thread consumer = new Thread(
+                () -> {
+                    System.out.println(Thread.currentThread().getName() + " started");
+                    try {
+                        while (true) {
+                            int result = queue.poll();
+                            consumerList.add(result);
+                            System.out.println(Thread.currentThread().getName() + " result = " + result);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                },
+                "Slave"
+        );
+        producer.start();
+        consumer.start();
+        producer.join();
+        consumer.interrupt();
         consumer.join();
         assertThat(producerList, is(List.of(1, 2, 3, 4, 5)));
         assertThat(consumerList, is(List.of(1, 2, 3, 4, 5)));
