@@ -99,7 +99,7 @@ public class NBACacheTest {
         Thread secondThread = new Thread(
                 () -> {
                     try {
-                        cache.delete(new Base(1, 1, "Second_new"));
+                        cache.delete(cache.get(new Base(1, 1, "Second_new")));
                     } catch (Exception e) {
                         ex.set(e);
                     }
@@ -107,8 +107,8 @@ public class NBACacheTest {
         );
 
         firstThread.start();
-        secondThread.start();
         firstThread.join();
+        secondThread.start();
         secondThread.join();
 
         first.setName("Excp first");

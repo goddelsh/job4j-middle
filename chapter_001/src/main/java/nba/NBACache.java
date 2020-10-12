@@ -8,14 +8,8 @@ public class NBACache {
 
     public void add(Base model) {
         Base changingModel = new Base(model.getId(), model.getVersion(), model.getName());
-        Base previosValue = this.versionMap.putIfAbsent(model.getId(), changingModel);
-        if (previosValue != null) {
-            if (previosValue.getVersion() == changingModel.getVersion()) {
-                changingModel.incVersion();
-                this.versionMap.put(model.getId(), changingModel);
-            } else {
+        if (this.versionMap.putIfAbsent(model.getId(), changingModel) != null) {
                 throw new OptimisticException();
-            }
         }
     }
 
@@ -32,12 +26,14 @@ public class NBACache {
     }
 
     public void delete(Base model) {
-        Base elem = this.get(model);
-        if (elem.getVersion() == model.getVersion()) {
-            this.versionMap.remove(elem.getId());
-        } else {
-            throw new OptimisticException();
-        }
+
+        this.versionMap.computeIfPresent(model.getId(), (key, value) -> {
+            if (value.getVersion() == model.getVersion()) {
+                return null;
+            } else {
+                throw new OptimisticException();
+            }
+        });
     }
 
     public Base get(Base model) {
