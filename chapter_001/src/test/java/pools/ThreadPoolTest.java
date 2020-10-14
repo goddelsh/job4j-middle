@@ -20,7 +20,7 @@ public class ThreadPoolTest {
 
         pool.work(() -> {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -28,7 +28,7 @@ public class ThreadPoolTest {
         });
         pool.work(() -> {
             try {
-                Thread.sleep(500);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -36,7 +36,7 @@ public class ThreadPoolTest {
         });
         pool.work(() -> results.add("Third"));
 
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         assertThat(results, is(List.of("Third", "Second", "First")));
 
