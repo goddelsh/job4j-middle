@@ -7,10 +7,7 @@ public class NBACache {
     final private Map<Integer, Base> versionMap = new ConcurrentHashMap<>();
 
     public void add(Base model) {
-        Base changingModel = new Base(model.getId(), model.getVersion(), model.getName());
-        if (this.versionMap.putIfAbsent(model.getId(), changingModel) != null) {
-                throw new OptimisticException();
-        }
+        this.versionMap.putIfAbsent(model.getId(), model);
     }
 
     public void update(Base model) {
@@ -25,15 +22,8 @@ public class NBACache {
         });
     }
 
-    public void delete(Base model) {
-
-        this.versionMap.computeIfPresent(model.getId(), (key, value) -> {
-            if (value.getVersion() == model.getVersion()) {
-                return null;
-            } else {
-                throw new OptimisticException();
-            }
-        });
+    public Base delete(Base model) {
+        return versionMap.remove(model.getId());
     }
 
     public Base get(Base model) {

@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.is;
 public class NBACacheTest {
 
     @Test
-    public void add() throws InterruptedException {
+    public void updateWithException() throws InterruptedException {
         AtomicReference<Exception> ex = new AtomicReference<>();
         NBACache cache = new NBACache();
         Base first = new Base(1, 1, "First");
@@ -20,7 +20,7 @@ public class NBACacheTest {
         Thread firstThread = new Thread(
                 () -> {
                     try {
-                        cache.add(new Base(1, 2, "First_new"));
+                        cache.update(new Base(1, 2, "First_new"));
                     } catch (Exception e) {
                         ex.set(e);
                     }
@@ -31,7 +31,6 @@ public class NBACacheTest {
         firstThread.join();
 
         assertThat(ex.get().toString(), is("OptimisticException"));
-
     }
 
     @Test
@@ -99,7 +98,7 @@ public class NBACacheTest {
         Thread secondThread = new Thread(
                 () -> {
                     try {
-                        cache.delete(cache.get(new Base(1, 1, "Second_new")));
+                        assertThat(cache.delete(cache.get(new Base(1, 1, "Second_new"))) != null, is(true));
                     } catch (Exception e) {
                         ex.set(e);
                     }
