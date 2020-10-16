@@ -1,12 +1,9 @@
 package pools;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 public class RolColSum {
 
@@ -72,20 +69,6 @@ public class RolColSum {
                 result[index].setRowSum(result[index].getRowSum() + matrix[index][j]);
                 result[j].setColSum(result[j].getColSum() + matrix[index][j]);
             }
-        });
-    }
-
-
-
-    public static CompletableFuture<Integer> getTask(int[][] data, int startRow, int endRow, int startCol) {
-        return CompletableFuture.supplyAsync(() -> {
-            int sum = 0;
-            int col = startCol;
-            for (int i = startRow; i <= endRow; i++) {
-                sum += data[i][col];
-                col--;
-            }
-            return sum;
         });
     }
 
