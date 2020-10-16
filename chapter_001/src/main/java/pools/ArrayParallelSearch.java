@@ -30,9 +30,9 @@ public class ArrayParallelSearch<T> {
             if (array.size() > 10) {
                 int sizeCount = array.size() / 2;
                 List<T> left = array.subList(0, sizeCount);
-                List<T> right = array.subList(sizeCount + 1, array.size());
-                SortTask leftTask = new SortTask(left, 0, value);
-                SortTask rightTask = new SortTask(right, sizeCount + 1, value);
+                List<T> right = array.subList(sizeCount, array.size());
+                SortTask leftTask = new SortTask(left, index, value);
+                SortTask rightTask = new SortTask(right, sizeCount + index, value);
 
                 rightTask.invoke();
                 leftTask.invoke();
