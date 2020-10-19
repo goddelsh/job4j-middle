@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class RolColSum {
 
@@ -50,24 +52,35 @@ public class RolColSum {
         Sums[] result = new Sums[matrix.length];
         List<CompletableFuture<Void>> results = new ArrayList<>();
         for (int i = 0; i < matrix.length; i++) {
-            results.add(computeAndSet(result, matrix, i));
+            final int index = i;
+            if (result[index] == null) {
+                result[index] = new Sums();
+            }
+            results.add(computeForRows((value) -> {
+                result[index].setRowSum(result[index].getRowSum() + value);
+            }, matrix, i));
+            results.add(computeForColls((value) -> {
+                result[index].setColSum(result[index].getColSum() + value);
+            }, matrix, i));
         }
         CompletableFuture<Void> compAll = CompletableFuture.allOf(results.toArray(new CompletableFuture[0]));
         compAll.get();
         return result;
     }
 
-    public static CompletableFuture<Void> computeAndSet(Sums[] result, int[][] matrix,  int index) {
+
+    public static CompletableFuture<Void> computeForRows(Consumer<Integer> result, int[][] matrix, int index) {
         return CompletableFuture.runAsync(() -> {
             for (int j = 0; j < matrix.length; j++) {
-                if (result[index] == null) {
-                    result[index] = new Sums();
-                }
-                if (result[j] == null) {
-                    result[j] = new Sums();
-                }
-                result[index].setRowSum(result[index].getRowSum() + matrix[index][j]);
-                result[j].setColSum(result[j].getColSum() + matrix[index][j]);
+                result.accept(matrix[index][j]);
+            }
+        });
+    }
+
+    public static CompletableFuture<Void> computeForColls(Consumer<Integer> result, int[][] matrix, int index) {
+        return CompletableFuture.runAsync(() -> {
+            for (int j = 0; j < matrix.length; j++) {
+                result.accept(matrix[j][index]);
             }
         });
     }
