@@ -12,6 +12,12 @@ import java.util.concurrent.ExecutionException;
 
 public class InfoBuilder {
 
+    private final Requester requester;
+
+    public InfoBuilder(Requester requester) {
+        this.requester = requester;
+    }
+
     public String getCamerasJSON(String url) throws ExecutionException, InterruptedException {
         return new Gson().toJson(this.getAndComputeInfo(url));
     }
@@ -19,7 +25,7 @@ public class InfoBuilder {
     public List<Map<String, String>> getAndComputeInfo(String mainUrl) throws ExecutionException, InterruptedException {
         List<Map<String, String>> result = new ArrayList<>();
         List<CompletableFuture<Void>> results = new ArrayList<>();
-        List<Map<String, String>> cameras = new Gson().fromJson(HttpRequester.getStringFromRequest(mainUrl), new TypeToken<List<Map<String, String>>>() { }.getType());
+        List<Map<String, String>> cameras = new Gson().fromJson(this.requester.getStringFromRequest(mainUrl), new TypeToken<List<Map<String, String>>>() { }.getType());
 
         for (Map<String, String> camera : cameras) {
             CompletableFuture<Void> newCompletable = new CompletableFuture<>();
@@ -47,13 +53,13 @@ public class InfoBuilder {
 
 
     public Map<String, String> getAndComputeDetails(String sourceUrl) {
-        Map<String, String> result = new Gson().fromJson(HttpRequester.getStringFromRequest(sourceUrl), Map.class);
+        Map<String, String> result = new Gson().fromJson(this.requester.getStringFromRequest(sourceUrl), Map.class);
         return result;
     }
 
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        String result = new InfoBuilder().getCamerasJSON("http://www.mocky.io/v2/5c51b9dd3400003252129fb5");
+        String result = new InfoBuilder(new HttpRequester()).getCamerasJSON("http://www.mocky.io/v2/5c51b9dd3400003252129fb5");
         System.out.println(result);
     }
 

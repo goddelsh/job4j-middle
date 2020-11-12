@@ -5,9 +5,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class HttpRequester {
-    
-    public static String getStringFromRequest(String url) {
+public class HttpRequester implements Requester {
+
+    @Override
+    public String getStringFromRequest(String url) {
         StringBuilder result = new StringBuilder();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
