@@ -22,7 +22,7 @@ public class InfoBuilder {
         List<Map<String, String>> cameras = new Gson().fromJson(HttpRequester.getStringFromRequest(mainUrl), new TypeToken<List<Map<String, String>>>() { }.getType());
 
         for (Map<String, String> camera : cameras) {
-            CompletableFuture<Map<String, String>> newCompletable = new CompletableFuture<>();
+            CompletableFuture<Void> newCompletable = new CompletableFuture<>();
             Map<String, String> map = new ConcurrentHashMap<>();
             result.add(map);
             map.put("id", camera.get("id"));
