@@ -93,6 +93,7 @@
 
     <modules>
         <module>chapter_001</module>
+        <module>chapter_003</module>
     </modules>
 
 
