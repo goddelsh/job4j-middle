@@ -5,12 +5,14 @@ import models.Item;
 import models.Wrapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 public class DBStore implements Store {
 
@@ -24,41 +26,45 @@ public class DBStore implements Store {
     public static Store getInstance() {
         return store;
     }
+    private <T> T tx(final Function<Session, T> command) {
+        final Session session = sf.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            T rsl = command.apply(session);
+            tx.commit();
+            return rsl;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
 
     @Override
     public void addTask(Item item) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        item.setCreated(new Date());
-        session.save(item);
-        session.getTransaction().commit();
-        session.close();
+        tx(session -> {
+            item.setCreated(new Date());
+            session.save(item);
+            return null;
+        });
     }
 
     @Override
     public List<Item> getItems(boolean filtered) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List result = filtered ? session.createQuery("from models.Item where done=false").list() : session.createQuery("from models.Item").list();
-        session.getTransaction().commit();
-        session.close();
-        return result;
+        return tx(session ->
+                filtered ?
+                        session.createQuery("from models.Item where done=false").list()
+                        : session.createQuery("from models.Item").list());
     }
 
     @Override
     public void markTask(Item item) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        session.createQuery("update models.Item set done = :done where id = :id")
-                .setParameter("done", item.isDone()).setParameter("id", item.getId()).executeUpdate();
-        session.getTransaction().commit();
-        session.close();
+        tx(session -> {
+            session.createQuery("update models.Item set done = :done where id = :id");
+            return null;
+        });
     }
-
-//    public static void main (String[] args) {
-//        String str = "{ 'action': 'MARK', 'items' : [{'id':1, 'done':true}]}";
-//        Wrapper w = new Gson().fromJson(str, Wrapper.class);
-//        System.out.println("123");
-//    }
 
 }
