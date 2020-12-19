@@ -1,11 +1,13 @@
-getItems(false);
+let filterVAl = false;
+getItems(filterVAl);
 function getItems(onlyUndone) {
+    filterVAl = onlyUndone;
     let req = JSON.stringify({
         "action" : onlyUndone ? "GETUNDONE" : "GETALL"
     });
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/chapter_003_war/tasks.do',
+        url: document.URL + '/tasks.do',
         data: req,
         dataType: 'json'
     }).done(function(data) {
@@ -62,7 +64,7 @@ function markTask(taskId) {
     });
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/chapter_003_war/tasks.do',
+        url: document.URL + '/tasks.do',
         data: req,
         dataType: 'json'
     }).done(function(data) {
@@ -87,12 +89,12 @@ function createTask(){
         });
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/chapter_003_war/tasks.do',
+            url: document.URL + '/tasks.do',
             data: req,
             dataType: 'json'
         }).done(function(data) {
             if (data['status'] == 'OK') {
-                getItems();
+                getItems(filterVAl);
             }
         }).fail(function(err){
             console.log(err);
