@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>TasksServlet</servlet-name>
+    <servlet-class>servlets.TasksServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>TasksServlet</servlet-name>
+    <url-pattern>/tasks.do</url-pattern>
+  </servlet-mapping>
 </web-app>
