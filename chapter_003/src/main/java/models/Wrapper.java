@@ -5,6 +5,16 @@ import java.util.List;
 public class Wrapper {
     private String status;
     private Actions action;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    private Integer userId;
     private List<Item> items;
 
     public Wrapper(String status) {

@@ -1,6 +1,7 @@
 package services;
 
 import models.Item;
+import models.User;
 
 import java.util.List;
 
@@ -11,4 +12,11 @@ public interface Store {
     List<Item> getItems(boolean filtred);
 
     void markTask(Item item);
+
+    User getUser(User user);
+
+    List<Item> getItemsByUser(Integer userId, boolean filtred);
+
+    User createUser(User user);
+
 }

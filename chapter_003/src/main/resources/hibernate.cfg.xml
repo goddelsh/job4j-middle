@@ -14,7 +14,9 @@
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
-
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <mapping class="models.User" />
         <mapping class="models.Item" />
+
     </session-factory>
 </hibernate-configuration>

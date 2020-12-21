@@ -1,4 +1,5 @@
 let filterVAl = false;
+
 getItems(filterVAl);
 function getItems(onlyUndone) {
     filterVAl = onlyUndone;
@@ -7,7 +8,7 @@ function getItems(onlyUndone) {
     });
     $.ajax({
         type: 'POST',
-        url: document.URL + '/tasks.do',
+        url: document.URL,
         data: req,
         dataType: 'json'
     }).done(function(data) {
@@ -64,7 +65,7 @@ function markTask(taskId) {
     });
     $.ajax({
         type: 'POST',
-        url: document.URL + '/tasks.do',
+        url: document.URL,
         data: req,
         dataType: 'json'
     }).done(function(data) {
@@ -77,6 +78,7 @@ function markTask(taskId) {
 };
 
 function createTask(){
+    alert('start task creation');
     let description = $('#description').val();
     if (description.length > 0) {
         let item = {
@@ -89,7 +91,7 @@ function createTask(){
         });
         $.ajax({
             type: 'POST',
-            url: document.URL + '/tasks.do',
+            url: document.URL,
             data: req,
             dataType: 'json'
         }).done(function(data) {

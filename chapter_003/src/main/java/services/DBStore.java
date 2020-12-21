@@ -1,8 +1,7 @@
 package services;
 
-import com.google.gson.Gson;
 import models.Item;
-import models.Wrapper;
+import models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -26,6 +25,7 @@ public class DBStore implements Store {
     public static Store getInstance() {
         return store;
     }
+
     private <T> T tx(final Function<Session, T> command) {
         final Session session = sf.openSession();
         final Transaction tx = session.beginTransaction();
@@ -54,16 +54,42 @@ public class DBStore implements Store {
     @Override
     public List<Item> getItems(boolean filtered) {
         return tx(session ->
-                filtered ?
-                        session.createQuery("from models.Item where done=false").list()
+                filtered
+                        ? session.createQuery("from models.Item where done = false").list()
                         : session.createQuery("from models.Item").list());
     }
 
     @Override
     public void markTask(Item item) {
         tx(session -> {
-            session.createQuery("update models.Item set done = :done where id = :id");
+            session.createQuery("update models.Item set done = :done where id = :id")
+                    .setParameter("done", item.isDone())
+                    .setParameter("id", item.getId()).executeUpdate();
             return null;
+        });
+    }
+
+    @Override
+    public User getUser(User user) {
+        return tx(session -> (User) session.createQuery("from models.User where email=:email and password=:password")
+                .setParameter("email", user.getEmail())
+                .setParameter("password", user.getPassword())
+                .list().stream()
+                .findFirst().orElse(null));
+    }
+
+    @Override
+    public List<Item> getItemsByUser(Integer userId, boolean filtred) {
+        return tx(session -> filtred
+                ? session.createQuery("from models.Item where done = false and user_id = :user").setParameter("user", userId).list()
+                : session.createQuery("from models.Item where user_id = :user").setParameter("user", userId).list());
+    }
+
+    @Override
+    public User createUser(User user) {
+        return tx(session -> {
+            session.save(user);
+            return user;
         });
     }
 

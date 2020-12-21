@@ -14,6 +14,10 @@ public class Item {
     private Date created;
     private boolean done;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public int getId() {
         return id;
     }
@@ -48,13 +52,17 @@ public class Item {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Item item = (Item) o;
-        return id == item.id &&
-                done == item.done &&
-                Objects.equals(descr, item.descr) &&
-                Objects.equals(created, item.created);
+        return id == item.id
+                && done == item.done
+                && Objects.equals(descr, item.descr)
+                && Objects.equals(created, item.created);
     }
 
     @Override
@@ -64,11 +72,17 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", desc='" + descr + '\'' +
-                ", created=" + created +
-                ", done=" + done +
-                '}';
+        return "Item{"
+                + "id=" + id + ", desc='"
+                + descr + '\'' + ", created="
+                + created + ", done=" + done + '}';
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
