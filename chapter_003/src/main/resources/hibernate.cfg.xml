@@ -20,5 +20,9 @@
         <mapping class="models.Role" />
         <mapping class="many.Car" />
         <mapping class="many.Brand" />
+        <mapping class="manytomany.Address" />
+        <mapping class="manytomany.Person" />
+        <mapping class="manytomany.Author" />
+        <mapping class="manytomany.Book" />
     </session-factory>
 </hibernate-configuration>
