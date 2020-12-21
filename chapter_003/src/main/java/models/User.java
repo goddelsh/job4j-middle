@@ -18,6 +18,12 @@ public class User {
         this.email = email;
     }
 
+    public static User of(String name) {
+        User user = new User();
+        user.name = name;
+        return user;
+    }
+
     public User() {
 
     }
