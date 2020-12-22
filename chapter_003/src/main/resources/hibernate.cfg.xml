@@ -24,5 +24,9 @@
         <mapping class="manytomany.Person" />
         <mapping class="manytomany.Author" />
         <mapping class="manytomany.Book" />
+        <mapping class="lazy.Task" />
+        <mapping class="lazy.Category" />
+        <mapping class="lazy.CarLazy" />
+        <mapping class="lazy.BrandLazy" />
     </session-factory>
 </hibernate-configuration>
