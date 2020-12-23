@@ -46,11 +46,12 @@ public class TasksServlet extends HttpServlet {
         } else if (Actions.MARK.equals(parsedRequest.getAction())) {
             store.markTask(parsedRequest.getItems().get(0));
             response = new Gson().toJson(new Wrapper("OK"));
-        } else if (Actions.GETCATS.equals(parsedRequest.getAction())) {
-            List<Category> categories = store.getCategories();
-            Wrapper wrapper = new Wrapper("OK");
-            wrapper.setCategories(categories);
-            response = new Gson().toJson(wrapper);
+//убрано в jsp
+//        } else if (Actions.GETCATS.equals(parsedRequest.getAction())) {
+//            List<Category> categories = store.getCategories();
+//            Wrapper wrapper = new Wrapper("OK");
+//            wrapper.setCategories(categories);
+//            response = new Gson().toJson(wrapper);
         } else {
             response = new Gson().toJson(new Wrapper("UNKNOWN"));
         }

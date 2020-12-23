@@ -1,4 +1,7 @@
 <%@ page import="models.User" %>
+<%@ page import="services.DBStore" %>
+<%@ page import="models.Category" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
@@ -28,7 +31,14 @@
                     <p><label>Описание</label></p>
                     <p><textarea id="description" rows="10" cols="45" name="descr"></textarea></p>
                     <p>Категории:</p>
-                    <p><select id="categoriesSelect" multiple></select></p>
+
+                    <p><select id="categoriesSelect" multiple>
+                        <% List<Category> categories = DBStore.getInstance().getCategories();
+                            if(categories != null && categories.size() > 0) {
+                                for(Category category: categories) { %>
+                        <option value="<%= category.getId()%>"><%= category.getName()%></option>
+                        <% }} %>
+                    </select></p>
                     <p><button onclick="createTask()" class="btn btn-default">Добавить</button></p>
                 </div>
             </div>
