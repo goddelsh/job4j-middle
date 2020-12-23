@@ -1,7 +1,9 @@
 package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +15,9 @@ public class Item {
     private String descr;
     private Date created;
     private boolean done;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private List<Category> categories = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -84,5 +89,13 @@ public class Item {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

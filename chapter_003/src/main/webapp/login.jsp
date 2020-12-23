@@ -38,6 +38,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Войти</button>
                 </form>
+                <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
             </div>
         </div>
     </div>

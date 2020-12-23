@@ -8,13 +8,16 @@
         <property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/todo</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">1234</property>
-        <property name="hibernate.connection.pool_size">1</property>
+        <property name="hibernate.connection.pool_size">15</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.connection.CharSet">utf8</property>
+        <property name="hibernate.connection.characterEncoding">utf8</property>
+        <property name="hibernate.connection.useUnicode">true</property>
         <mapping class="models.User" />
         <mapping class="models.Item" />
         <mapping class="models.Role" />
@@ -24,8 +27,7 @@
         <mapping class="manytomany.Person" />
         <mapping class="manytomany.Author" />
         <mapping class="manytomany.Book" />
-        <mapping class="lazy.Task" />
-        <mapping class="lazy.Category" />
+        <mapping class="models.Category" />
         <mapping class="lazy.CarLazy" />
         <mapping class="lazy.BrandLazy" />
     </session-factory>

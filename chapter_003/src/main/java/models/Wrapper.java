@@ -16,6 +16,7 @@ public class Wrapper {
 
     private Integer userId;
     private List<Item> items;
+    private List<Category> categories;
 
     public Wrapper(String status) {
         this.status = status;
@@ -48,5 +49,13 @@ public class Wrapper {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

@@ -1,7 +1,10 @@
 package services;
 
+import com.google.gson.Gson;
+import models.Category;
 import models.Item;
 import models.User;
+import models.Wrapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,6 +12,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
@@ -82,8 +87,8 @@ public class DBStore implements Store {
     @Override
     public List<Item> getItemsByUser(Integer userId, boolean filtred) {
         return tx(session -> filtred
-                ? session.createQuery("from models.Item where done = false and user_id = :user").setParameter("user", userId).list()
-                : session.createQuery("from models.Item where user_id = :user").setParameter("user", userId).list());
+                ? session.createQuery("from models.Item i join fetch i.categories where i.done = false and user_id = :user").setParameter("user", userId).list()
+                : session.createQuery("from models.Item i join fetch i.categories where user_id = :user").setParameter("user", userId).list());
     }
 
     @Override
@@ -92,6 +97,11 @@ public class DBStore implements Store {
             session.save(user);
             return user;
         });
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return tx(session -> session.createQuery("from models.Category").list());
     }
 
 }

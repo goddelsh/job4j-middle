@@ -1,5 +1,6 @@
 package services;
 
+import models.Category;
 import models.Item;
 import models.User;
 
@@ -18,5 +19,7 @@ public interface Store {
     List<Item> getItemsByUser(Integer userId, boolean filtred);
 
     User createUser(User user);
+
+    List<Category> getCategories();
 
 }

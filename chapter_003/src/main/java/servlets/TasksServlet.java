@@ -1,10 +1,7 @@
 package servlets;
 
 import com.google.gson.Gson;
-import models.Actions;
-import models.Item;
-import models.User;
-import models.Wrapper;
+import models.*;
 import services.DBStore;
 import services.Store;
 
@@ -49,6 +46,11 @@ public class TasksServlet extends HttpServlet {
         } else if (Actions.MARK.equals(parsedRequest.getAction())) {
             store.markTask(parsedRequest.getItems().get(0));
             response = new Gson().toJson(new Wrapper("OK"));
+        } else if (Actions.GETCATS.equals(parsedRequest.getAction())) {
+            List<Category> categories = store.getCategories();
+            Wrapper wrapper = new Wrapper("OK");
+            wrapper.setCategories(categories);
+            response = new Gson().toJson(wrapper);
         } else {
             response = new Gson().toJson(new Wrapper("UNKNOWN"));
         }

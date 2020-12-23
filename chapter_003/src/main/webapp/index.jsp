@@ -27,6 +27,8 @@
                 <div class="form-group">
                     <p><label>Описание</label></p>
                     <p><textarea id="description" rows="10" cols="45" name="descr"></textarea></p>
+                    <p>Категории:</p>
+                    <p><select id="categoriesSelect" multiple></select></p>
                     <p><button onclick="createTask()" class="btn btn-default">Добавить</button></p>
                 </div>
             </div>
@@ -45,6 +47,7 @@
                     <tr>
                         <th scope="col">№</th>
                         <th scope="col">Описание</th>
+                        <th scope="col">Категории</th>
                         <th scope="col">Дата создания</th>
                         <th scope="col">Статус</th>
                     </tr>

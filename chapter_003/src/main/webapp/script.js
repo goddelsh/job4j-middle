@@ -1,6 +1,32 @@
 let filterVAl = false;
-
+getCategories();
 getItems(filterVAl);
+
+function getCategories() {
+    let req = JSON.stringify({
+        "action" : "GETCATS"
+    });
+    $.ajax({
+        type: 'POST',
+        url: document.URL,
+        data: req,
+        dataType: 'json'
+    }).done(function(data) {
+        if (data['status'] == 'OK') {
+            let categories = data['categories'];
+            if (categories.length > 0) {
+                for (let i = 0; i < categories.length; i++) {
+                    $('#categoriesSelect').append(`<option value="${categories[i].id}">${categories[i].name}</option>>`);
+                }
+            }
+        }
+    }).fail(function(err){
+        console.log(err);
+    });
+}
+
+
+
 function getItems(onlyUndone) {
     filterVAl = onlyUndone;
     let req = JSON.stringify({
@@ -23,10 +49,14 @@ function getItems(onlyUndone) {
                     }else {
                         status = `<button id=\"${items[i].id}\" onclick=\"return markTask(${items[i].id})\" class=\"btn btn-primary\" type=\"button\">Завершить</button>`;
                     }
+                    let cats = '';
+                    items[i].categories.forEach(el => cats += el.name + ' | ')
                     let evalStr = '<tr><td>'
                         + items[i].id
                         + '</td><td>'
                         + items[i].descr
+                        + '</td><td>'
+                        + cats
                         + '</td><td>'
                         + items[i].created
                         + '</td><td>'
@@ -80,10 +110,20 @@ function markTask(taskId) {
 function createTask(){
     alert('start task creation');
     let description = $('#description').val();
-    if (description.length > 0) {
+    let cats = $('#categoriesSelect').val();
+    if (description.length > 0 && cats.length > 0) {
+        let cat = [];
+        for (let i = 0; i < cats.length; i++) {
+            let c = {
+                "id" : cats[i]
+            }
+            cat.push(c);
+        }
+
         let item = {
             "descr" : description,
-            "done" : false
+            "done" : false,
+            "categories" : cat
         };
         let req = JSON.stringify({
             "action" : "ADD",
