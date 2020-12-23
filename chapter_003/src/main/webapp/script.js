@@ -50,7 +50,7 @@ function getItems(onlyUndone) {
                         status = `<button id=\"${items[i].id}\" onclick=\"return markTask(${items[i].id})\" class=\"btn btn-primary\" type=\"button\">Завершить</button>`;
                     }
                     let cats = '';
-                    items[i].categories.forEach(el => cats += el.name + ' | ')
+                    items[i].categories.forEach(el => cats += el.name + ' | ');
                     let evalStr = '<tr><td>'
                         + items[i].id
                         + '</td><td>'

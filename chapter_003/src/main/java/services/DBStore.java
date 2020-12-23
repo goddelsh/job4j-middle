@@ -51,7 +51,7 @@ public class DBStore implements Store {
     @Override
     public void addTask(Item item) {
         tx(session -> {
-            item.setCreated(new Date());
+            item.setCreated(new Date(System.currentTimeMillis()));
             session.save(item);
             return null;
         });
@@ -87,8 +87,8 @@ public class DBStore implements Store {
     @Override
     public List<Item> getItemsByUser(Integer userId, boolean filtred) {
         return tx(session -> filtred
-                ? session.createQuery("from models.Item i join fetch i.categories where i.done = false and user_id = :user").setParameter("user", userId).list()
-                : session.createQuery("from models.Item i join fetch i.categories where user_id = :user").setParameter("user", userId).list());
+                ? session.createQuery("select distinct i from models.Item i left join fetch i.categories where i.done = false and user_id = :user").setParameter("user", userId).list()
+                : session.createQuery("select distinct i from models.Item i left join fetch i.categories where user_id = :user").setParameter("user", userId).list());
     }
 
     @Override

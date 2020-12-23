@@ -13,6 +13,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String descr;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     private boolean done;
 
