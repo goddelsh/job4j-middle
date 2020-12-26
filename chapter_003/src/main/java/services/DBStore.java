@@ -85,16 +85,11 @@ public class DBStore implements Store {
     }
 
 
-    private interface FilterQuery {
-        String getQuery(boolean filtered);
-    }
-
     @Override
     public List<Item> getItemsByUser(Integer userId, boolean filtred) {
-        return tx(session -> session.createQuery(((FilterQuery) filtered -> filtred
+        return tx(session -> session.createQuery(filtred
                 ? "select distinct i from models.Item i left join fetch i.categories where i.done = false and user_id = :user"
                 : "select distinct i from models.Item i left join fetch i.categories where user_id = :user")
-                .getQuery(filtred))
                 .setParameter("user", userId).list());
     }
 
