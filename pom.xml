@@ -94,6 +94,7 @@
     <modules>
         <module>chapter_001</module>
         <module>chapter_003</module>
+        <module>cars_sales</module>
     </modules>
 
 

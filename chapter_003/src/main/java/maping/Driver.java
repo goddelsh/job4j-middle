@@ -3,7 +3,7 @@ package maping;
 import javax.persistence.*;
 
 @Entity
-@Table(name="drivers")
+@Table(name = "drivers")
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
