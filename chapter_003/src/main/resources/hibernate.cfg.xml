@@ -22,7 +22,7 @@
         <mapping class="models.User" />
         <mapping class="models.Item" />
         <mapping class="models.Role" />
-        <mapping class="many.Car" />
+        <mapping class="many.CarOld" />
         <mapping class="many.Brand" />
         <mapping class="manytomany.Address" />
         <mapping class="manytomany.Person" />
@@ -31,5 +31,8 @@
         <mapping class="models.Category" />
         <mapping class="lazy.CarLazy" />
         <mapping class="lazy.BrandLazy" />
+        <mapping class="maping.Car" />
+        <mapping class="maping.Driver" />
+        <mapping class="maping.Engine" />
     </session-factory>
 </hibernate-configuration>

@@ -18,7 +18,7 @@ public class Brand {
     private Integer id;
     private String name;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Car> cars = new ArrayList<>();
+    private List<CarOld> carOlds = new ArrayList<>();
 
     public Brand(String name) {
         this.name = name;
@@ -27,8 +27,8 @@ public class Brand {
     public Brand() {
     }
 
-    public void addCar(Car car) {
-        cars.add(car);
+    public void addCar(CarOld carOld) {
+        carOlds.add(carOld);
     }
 
     public static Brand of(String name) {
@@ -52,12 +52,12 @@ public class Brand {
         this.name = name;
     }
 
-    public List<Car> getCars() {
-        return cars;
+    public List<CarOld> getCars() {
+        return carOlds;
     }
 
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
+    public void setCars(List<CarOld> carOlds) {
+        this.carOlds = carOlds;
     }
 
 
@@ -69,15 +69,15 @@ public class Brand {
             Session session = sf.openSession();
             session.beginTransaction();
 
-            List<Car> mersCars = List.of(Car.of("S100"), Car.of("L30"), Car.of("A50"), Car.of("S200"));
-            List<Car> bmwCars = List.of(Car.of("C330X"), Car.of("M1511"), Car.of("LK-17"));
-            mersCars.forEach(car -> session.save(car));
-            bmwCars.forEach(car -> session.save(car));
+            List<CarOld> mersCarOlds = List.of(CarOld.of("S100"), CarOld.of("L30"), CarOld.of("A50"), CarOld.of("S200"));
+            List<CarOld> bmwCarOlds = List.of(CarOld.of("C330X"), CarOld.of("M1511"), CarOld.of("LK-17"));
+            mersCarOlds.forEach(carOld -> session.save(carOld));
+            bmwCarOlds.forEach(carOld -> session.save(carOld));
 
             List<Brand> brands = List.of(Brand.of("Mercedes"), Brand.of("BMW"));
 
-            mersCars.forEach(car -> brands.get(0).addCar(session.get(Car.class, car.getId())));
-            bmwCars.forEach(car -> brands.get(1).addCar(session.get(Car.class, car.getId())));
+            mersCarOlds.forEach(carOld -> brands.get(0).addCar(session.get(CarOld.class, carOld.getId())));
+            bmwCarOlds.forEach(carOld -> brands.get(1).addCar(session.get(CarOld.class, carOld.getId())));
 
             brands.forEach(brand -> session.save(brand));
 

@@ -3,22 +3,22 @@ package many;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cars")
-public class Car {
+@Table(name = "carsold")
+public class CarOld {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    public Car() {
+    public CarOld() {
     }
 
-    public Car(String name) {
+    public CarOld(String name) {
         this.name = name;
     }
 
-    public static Car of(String name) {
-        return new Car(name);
+    public static CarOld of(String name) {
+        return new CarOld(name);
     }
 
     public Integer getId() {
