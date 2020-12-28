@@ -1,31 +1,5 @@
 let filterVAl = false;
-//getCategories();
 getItems(filterVAl);
-//убрано в jsp
-// function getCategories() {
-//     let req = JSON.stringify({
-//         "action" : "GETCATS"
-//     });
-//     $.ajax({
-//         type: 'POST',
-//         url: document.URL,
-//         data: req,
-//         dataType: 'json'
-//     }).done(function(data) {
-//         if (data['status'] == 'OK') {
-//             let categories = data['categories'];
-//             if (categories.length > 0) {
-//                 for (let i = 0; i < categories.length; i++) {
-//                     $('#categoriesSelect').append(`<option value="${categories[i].id}">${categories[i].name}</option>>`);
-//                 }
-//             }
-//         }
-//     }).fail(function(err){
-//         console.log(err);
-//     });
-// }
-
-
 
 function getItems(onlyUndone) {
     filterVAl = onlyUndone;
@@ -108,7 +82,6 @@ function markTask(taskId) {
 };
 
 function createTask(){
-    alert('start task creation');
     let description = $('#description').val();
     let cats = $('#categoriesSelect').val();
     if (description.length > 0 && cats.length > 0) {

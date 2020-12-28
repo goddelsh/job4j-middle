@@ -111,16 +111,6 @@ public class Car {
 
             cars.forEach(car -> session.save(car));
 
-          //  List<Book> books = List.of(Book.of("Сами боги"), Book.of("Стальные пещеры"), Book.of("Хроники Норби"), Book.of("Последний бессмертный"));
-          //  List<Author> authors = List.of(Author.of("Айзек Азимов"), Author.of("Джаннет Азимова"));
-         //   authors.get(0).setBooks(books.subList(0, 3));
-         //   authors.get(1).setBooks(books.subList(2, 4));
-
-            //     authors.forEach(author -> session.save(author));
-
-       //     Author author = session.get(Author.class, 2);
-         //   session.remove(author);
-
             session.getTransaction().commit();
             session.close();
         }  catch (Exception e) {
