@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface StoreService {
 
-    void init();
-
     List<CarBody> getCarBodies();
     List<CarBrand> getCarBrands();
     List<CarEngine> getCarEngines();
@@ -15,14 +13,15 @@ public interface StoreService {
     List<CarType> getCarTypes();
 
     List<SellerContact> getSellerContact(User user);
-    List<Announcement> getAnnouncements(User user);
+    List<Announcement> getAnnouncements(User user, int page);
     Announcement getFullAnnouncements(Announcement announcement);
     List<CarPhoto> getCarPhotos(Announcement announcement);
-
+    List<CarPhoto> getCarPhotos(List<CarPhoto> carPhotos);
     void addAnnouncement(Announcement announcement);
     void editAnnouncement(Announcement announcement);
 
-    void addCarPhoto(CarPhoto carPhoto);
+    List<CarPhoto> addCarPhotos(List<CarPhoto> carPhotos);
+    CarPhoto addCarPhoto(CarPhoto carPhotos);
     void deleteCarPhoto(CarPhoto carPhoto);
 
     void addSellerContact(SellerContact sellerContact);

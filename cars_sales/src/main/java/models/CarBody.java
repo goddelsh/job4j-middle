@@ -17,6 +17,13 @@ public class CarBody {
     private Integer id;
     private String name;
 
+    public CarBody() {
+    }
+
+    public CarBody(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -33,24 +40,4 @@ public class CarBody {
         this.name = name;
     }
 
-    public static void main(String[] agrgs) {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure().build();
-        try {
-            SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-            Session session = sf.openSession();
-            session.beginTransaction();
-            
-            List<CarBrand> brands = List.of(new CarBrand("123"), new CarBrand("3132"));
-            brands.forEach(author -> session.save(author));
-
-
-            session.getTransaction().commit();
-            session.close();
-        }  catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
-    }
 }

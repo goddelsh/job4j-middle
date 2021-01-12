@@ -1,5 +1,7 @@
 package models;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "announcements")
+@DynamicUpdate
 public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +44,34 @@ public class Announcement {
     private User user;
     private Integer status;
 
+    private String contact;
+
+
+    public Announcement(Integer id, String title, String description, Long price, Date createTime, Integer status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.createTime = createTime;
+        this.status = status;
+    }
+
+    public Announcement(Integer id) {
+        this.id = id;
+    }
+
+    public Announcement() {
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+//  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  //  private List<SellerContact> contactList = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -153,4 +184,12 @@ public class Announcement {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+//    public List<SellerContact> getContactList() {
+//        return contactList;
+//    }
+//
+//    public void setContactList(List<SellerContact> contactList) {
+//        this.contactList = contactList;
+//    }
 }

@@ -3,12 +3,19 @@ package models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "car_engines")
+@Table(name = "car_models")
 public class CarModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+
+    public CarModel() {
+    }
+
+    public CarModel(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;

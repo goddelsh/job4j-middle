@@ -8,30 +8,23 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
     <script src="<%=request.getContextPath()%>/script.js"></script>
-    <title>Объявления</title>
+    <title>Мои объявления</title>
 </head>
 <body>
 <div class="container pt-3">
-<%  User user = (User) request.getSession().getAttribute("user");
-    if (user != null) { %>
+    <%  User user = (User) request.getSession().getAttribute("user");
+        if (user != null) { %>
     <a class="nav-link" href="<%=request.getContextPath()%>/login.do">
         <%=user.getName()%>
         | Выйти </a>
     <a class="nav-link" href="<%=request.getContextPath()%>/myannouncements.do">
         Мои обьявления</a>
-    <% } else { %>
-    <li class="nav-item">
-        <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="<%=request.getContextPath()%>/login.do">Войти</a>
-    </li>
-    <% } %>
+    <% }  %>
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
                 <form action="<%=request.getContextPath()%>/addAnnouncement.do" method="get">
-                    <p><button id="filterBtn" class="btn btn-primary" type="submit">Добавить объявление</button></p>
+                <p><button id="filterBtn" class="btn btn-primary" type="submit">Добавить объявление</button></p>
                 </form>
             </div>
 
@@ -45,9 +38,10 @@
                         <th scope="col">Дата создания</th>
                         <th scope="col">Цена</th>
                         <th scope="col">Детали</th>
+                        <th scope="col">Действие</th>
                     </tr>
                     </thead>
-                    <tbody id="itemsList">
+                    <tbody id="myitemsList">
                     </tbody>
                 </table>
             </div>

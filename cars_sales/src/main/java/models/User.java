@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,8 +13,16 @@ public class User {
     private String name;
     private String email;
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SellerContact> contactList = new ArrayList<>();
+
+
+    public User() {
+    }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     public Integer getId() {
         return id;
@@ -46,11 +56,4 @@ public class User {
         this.password = password;
     }
 
-    public List<SellerContact> getContactList() {
-        return contactList;
-    }
-
-    public void setContactList(List<SellerContact> contactList) {
-        this.contactList = contactList;
-    }
 }

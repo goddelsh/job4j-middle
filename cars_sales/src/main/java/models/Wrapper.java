@@ -3,7 +3,10 @@ package models;
 import java.util.List;
 
 public class Wrapper {
+
     private Actions action;
+    private int page = 1;
+    private int pages = 10;
     private String filter;
     private List<Announcement> announcements;
     private List<CarBody> carBodies;
@@ -102,4 +105,21 @@ public class Wrapper {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
 }

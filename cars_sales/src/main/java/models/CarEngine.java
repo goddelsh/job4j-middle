@@ -10,6 +10,13 @@ public class CarEngine {
     private Integer id;
     private String name;
 
+    public CarEngine() {
+    }
+
+    public CarEngine(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

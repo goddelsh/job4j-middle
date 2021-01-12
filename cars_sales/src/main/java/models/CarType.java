@@ -11,6 +11,13 @@ public class CarType {
     private Integer id;
     private String name;
 
+    public CarType() {
+    }
+
+    public CarType(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

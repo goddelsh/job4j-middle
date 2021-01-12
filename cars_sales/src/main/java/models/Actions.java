@@ -2,6 +2,8 @@ package models;
 
 public enum Actions {
     GET_ANNOUNCEMENTS,
+    GET_MYANNOUNCEMENTS,
+    GET_ANNOUNCEMENT,
     GET_CARTYPES,
     GET_CARBODIES,
     GET_CARBRANDS,
