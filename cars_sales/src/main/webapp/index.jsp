@@ -17,8 +17,10 @@
     <a class="nav-link" href="<%=request.getContextPath()%>/login.do">
         <%=user.getName()%>
         | Выйти </a>
-    <a class="nav-link" href="<%=request.getContextPath()%>/myannouncements.do">
-        Мои обьявления</a>
+    <input type="radio" id="all" name="gender" value="0" onchange="getAllAnn()" checked>
+    <label for="all">Все</label><br>
+    <input type="radio" id="my" name="gender" value="1" onchange="getAllMy()">
+    <label for="my">Только мои</label><br>
     <% } else { %>
     <li class="nav-item">
         <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>

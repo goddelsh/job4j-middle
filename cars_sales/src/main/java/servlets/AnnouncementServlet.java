@@ -8,8 +8,6 @@ import org.apache.commons.io.IOUtils;
 import services.AnnouncementService;
 import services.AnnouncementServiceImpl;
 import services.DBStoreService;
-import services.StoreService;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +25,7 @@ public class AnnouncementServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.removeAttribute("announcment");
+        req.getSession().removeAttribute("announcment");
         req.getRequestDispatcher("/").forward(req, resp);
     }
 

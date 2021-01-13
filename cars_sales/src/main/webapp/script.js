@@ -1,26 +1,19 @@
-getAnnouncments(1);
+let all = 0;
 let announcement;
+let page = 1;
 let images = {};
+getAnnouncments(1);
 
-function getFullAnnouncment(id) {
-    let announcment = {
-        "id": id,
-    };
-    let req = JSON.stringify({
-        "action" : "GET_ANNOUNCEMENT",
-        "announcements" : [announcment]
-    });
-    $.ajax({
-        type: 'POST',
-        url: document.URL,
-        data: req,
-        dataType: 'json'
-    }).done(function(data) {
-        console.log(data);
-    }).fail(function(data){
-        alert( 'Sorry.' );
-    });
+function getAllAnn(){
+    all = 0;
+    getAnnouncments(page);
 }
+
+function getAllMy(){
+    all = 1;
+    getAnnouncments(page);
+}
+
 
 
 function createAnnouncment() {
@@ -88,9 +81,14 @@ function uploadPhotos(){
 
 
 function getAnnouncments(page) {
+
+    let action = "GET_ANNOUNCEMENTS";
+    if (all != 0) {
+        action = "GET_MYANNOUNCEMENTS";
+    }
     let req = JSON.stringify({
         "page" : page,
-        "action" : "GET_ANNOUNCEMENTS"
+        "action" : action
     });
     $.ajax({
         type: 'POST',
@@ -98,6 +96,7 @@ function getAnnouncments(page) {
         data: req,
         dataType: 'json'
     }).done(function(data) {
+        $('#itemsList').empty();
         if (data['status'] == 'OK') {
             let items = data['announcements'];
             if(items.length) {

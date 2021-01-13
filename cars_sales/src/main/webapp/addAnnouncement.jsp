@@ -10,16 +10,43 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
     <% Announcement announcement = (Announcement) request.getSession().getAttribute("announcment");
+        Boolean owner = (Boolean) request.getSession().getAttribute("owner");
         if (announcement != null){ %>
     <title> Изменить объявление</title>
     <% } else { %>
     <title>Добавить объявление</title>
     <% } %>
     <script src="<%=request.getContextPath()%>/script.js"></script>
+    <script>
+        $(document).ready(function () {
+            let sbrands = {};
+            let smodels = [];
+            <% for (CarBrand brand : DBStoreService.getStoreService().getCarBrands()) {%>
+            smodels = [];
+            <% for (CarModel model : brand.getModels()) {%>
+            smodels.push({
+                id: "<%=model.getId()%>",
+                name: "<%=model.getName()%>"
+            });
+            <% } %>
+            sbrands["<%=brand.getId()%>"] = smodels;
+            <% } %>
+            $("#carBrandSelect").change(function () {
+                var val = $(this).val();
+                let smodel = sbrands[val];
+                if (smodel.length > 0) {
+                    let s = '';
+                    smodel.forEach(el => {
+                        s += '<option value=' + el.id + '>' + el.name + '</option>';
+                    });
+                    $("#carModelSelect").html(s);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="container">
-
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
@@ -73,10 +100,12 @@
                     <% }} %>
                     </tbody>
                 </table>
+                <% if (announcement == null || owner) {%>
                 <div class="checkbox">
                     <input type="file" id="file" multiple>
                 </div>
                 <button id="upload" onclick="uploadPhotos()"  type="submit" class="btn btn-default">Submit</button>
+                <% } %>
             </div>
         </div>
         <div class="card" style="width: 100%">
@@ -141,7 +170,7 @@
                         <% }}} %>
                     </select></p>
 
-                    <% if(announcement != null) { %>
+                    <% if(announcement != null && owner) { %>
                     <p>Статус:</p>
                     <p><select id="announctmentStatus">
                         <% if(announcement.getStatus().equals(0)) { %>
@@ -168,12 +197,13 @@
                 </div>
             </div>
         </div>
-        <% if(announcement != null) { %>
+        <% if(announcement != null) {
+            if (owner) { %>
         <button id="add" onclick="changeAnnouncment()" type="submit" class="btn btn-primary">Изменить</button>
-        <% } else { %>
+        <% } } else { %>
         <button id="add" onclick="createAnnouncment()" type="submit" class="btn btn-primary">Добавить</button>
         <% } %>
     </div>
-    </form>
+</div>
 </body>
 </html>

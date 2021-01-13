@@ -15,7 +15,13 @@ public class AddAnnouncement extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         if(req.getParameter("id") != null && !req.getParameter("id").isEmpty()) {
-            req.getSession().setAttribute("announcment", DBStoreService.getStoreService().getFullAnnouncements(new Announcement(Integer.parseInt(req.getParameter("id")))));
+            Announcement announcement = DBStoreService.getStoreService().getFullAnnouncements(new Announcement(Integer.parseInt(req.getParameter("id"))));
+            req.getSession().setAttribute("announcment", announcement);
+            if (user.getId().equals(announcement.getUser().getId())) {
+                req.getSession().setAttribute("owner", true);
+            } else {
+                req.getSession().setAttribute("owner", false);
+            }
         }
         req.getRequestDispatcher("/addAnnouncement.jsp").forward(req, resp);
     }
