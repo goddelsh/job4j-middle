@@ -24,7 +24,7 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name;
-        if(req.getParameter("id") != null && req.getParameter("name") != null) {
+        if (req.getParameter("id") != null && req.getParameter("name") != null) {
             name = req.getParameter("name");
             resp.setContentType("name=" + name);
             resp.setContentType("image/png");
@@ -36,13 +36,6 @@ public class UploadServlet extends HttpServlet {
                 }
             }
         }
-//        List<String> images = new ArrayList<>();
-//        for (File name : new File("images").listFiles()) {
-//            images.add(name.getName());
-//        }
-//        req.setAttribute("images", images);
-//        RequestDispatcher dispatcher = req.getRequestDispatcher("/upload.jsp");
-//        dispatcher.forward(req, resp);
     }
 
     @Override

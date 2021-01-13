@@ -14,7 +14,7 @@ public class AddAnnouncement extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
-        if(req.getParameter("id") != null && !req.getParameter("id").isEmpty()) {
+        if (req.getParameter("id") != null && !req.getParameter("id").isEmpty()) {
             Announcement announcement = DBStoreService.getStoreService().getFullAnnouncements(new Announcement(Integer.parseInt(req.getParameter("id"))));
             req.getSession().setAttribute("announcment", announcement);
             if (user.getId().equals(announcement.getUser().getId())) {

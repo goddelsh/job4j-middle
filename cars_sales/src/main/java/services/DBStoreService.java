@@ -119,7 +119,7 @@ public class DBStoreService implements StoreService {
 
     @Override
     public List<Announcement> getAnnouncements(User user, int page) {
-        if(page < 1) {
+        if (page < 1) {
             throw new IllegalStateException("Wrong page value");
         }
         return tx(session -> {
@@ -127,7 +127,7 @@ public class DBStoreService implements StoreService {
             if (user != null) {
                 result =  session.createQuery("select new Announcement(a.id, a.title, a.description, a.price, a.createTime, a.status) from models.Announcement a where user_id = :user_id order by a.createTime desc")
                         .setParameter("user_id", user.getId()).setFirstResult((page - 1) * 20).setMaxResults(20).list();
-            }else {
+            } else {
                 result = session.createQuery("select new Announcement(a.id, a.title, a.description, a.price, a.createTime, a.status) from models.Announcement a where a.status = 0 order by a.createTime desc")
                         .setFirstResult((page - 1) * 20).setMaxResults(20).list();
             }
@@ -155,7 +155,7 @@ public class DBStoreService implements StoreService {
 
     @Override
     public List<CarPhoto> getCarPhotos(List<CarPhoto> carPhotos) {
-        return tx(session ->session.createQuery("from models.CarPhoto where id in :idList")
+        return tx(session -> session.createQuery("from models.CarPhoto where id in :idList")
                 .setParameter(":idList", carPhotos.stream().map(photo -> photo.getId()).collect(Collectors.toList())).list()
         );
     }
@@ -179,7 +179,7 @@ public class DBStoreService implements StoreService {
     @Override
     public List<CarPhoto> addCarPhotos(List<CarPhoto> carPhotos) {
         return tx(session -> {
-            carPhotos.forEach(photo -> photo.setId((Integer)session.save(photo)));
+            carPhotos.forEach(photo -> photo.setId((Integer) session.save(photo)));
             return carPhotos;
         });
     }
@@ -187,7 +187,7 @@ public class DBStoreService implements StoreService {
     @Override
     public CarPhoto addCarPhoto(CarPhoto carPhotos) {
         return tx(session -> {
-            carPhotos.setId((Integer)session.save(carPhotos));
+            carPhotos.setId((Integer) session.save(carPhotos));
             return carPhotos;
         });
     }
