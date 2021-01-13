@@ -34,5 +34,6 @@
         <mapping class="maping.Car" />
         <mapping class="maping.Driver" />
         <mapping class="maping.Engine" />
+        <mapping class="hql.Candidate" />
     </session-factory>
 </hibernate-configuration>
