@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class StartUI {
 
-    @Autowired
+
     private Store store;
-    @Autowired
+
     private ConsoleInput consoleInput;
 
 //    public StartUI(Store store, ConsoleInput consoleInput) {
@@ -28,5 +28,21 @@ public class StartUI {
         for (String value : store.getAll()) {
             System.out.println(value);
         }
+    }
+
+    public Store getStore() {
+        return store;
+    }
+    @Autowired
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public ConsoleInput getConsoleInput() {
+        return consoleInput;
+    }
+    @Autowired
+    public void setConsoleInput(ConsoleInput consoleInput) {
+        this.consoleInput = consoleInput;
     }
 }
