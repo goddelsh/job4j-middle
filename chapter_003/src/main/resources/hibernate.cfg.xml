@@ -28,6 +28,8 @@
         <mapping class="manytomany.Person" />
         <mapping class="manytomany.Author" />
         <mapping class="manytomany.Book" />
+        <mapping class="manytomany.Tag" />
+        <mapping class="manytomany.Post" />
         <mapping class="models.Category" />
         <mapping class="lazy.CarLazy" />
         <mapping class="lazy.BrandLazy" />
