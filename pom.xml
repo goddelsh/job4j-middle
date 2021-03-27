@@ -111,6 +111,7 @@
         <module>chapter_003</module>
         <module>cars_sales</module>
         <module>chapter_004</module>
+        <module>auth</module>
     </modules>
 
 
