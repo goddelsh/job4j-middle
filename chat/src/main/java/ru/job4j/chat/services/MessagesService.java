@@ -3,9 +3,7 @@ package ru.job4j.chat.services;
 import org.springframework.stereotype.Service;
 import ru.job4j.chat.models.Message;
 import ru.job4j.chat.models.Room;
-import ru.job4j.chat.models.User;
 import ru.job4j.chat.repositories.MessagesRepository;
-import ru.job4j.chat.repositories.UsersRepository;
 
 import java.util.ArrayList;
 import java.util.List;

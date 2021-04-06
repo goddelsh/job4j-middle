@@ -7,13 +7,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String login;
     private String password;
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -27,11 +27,11 @@ public class User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(roles, user.roles);
+        Person person = (Person) o;
+        return Objects.equals(id, person.id) &&
+                Objects.equals(login, person.login) &&
+                Objects.equals(password, person.password) &&
+                Objects.equals(roles, person.roles);
     }
 
     @Override

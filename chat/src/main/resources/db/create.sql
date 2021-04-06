@@ -1,11 +1,11 @@
 create table roles (
    id serial primary key not null,
-   name varchar(2000)
+   name varchar(2000) unique
 );
 
 create table users (
    id serial primary key not null,
-   login varchar(2000) not null,
+   login varchar(2000) unique not null,
    password varchar(2000) not null
 );
 

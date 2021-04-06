@@ -14,17 +14,17 @@ public class Message {
     private String message;
     @Column(name = "create_date")
     private Date createDate;
-    @ManyToOne(targetEntity = User.class)
-    private User user;
+    @ManyToOne(targetEntity = Person.class)
+    private Person person;
     @ManyToOne(targetEntity = Room.class)
     private Room room;
 
     public Message() {
     }
 
-    public Message(String message, User user, Room room) {
+    public Message(String message, Person person, Room room) {
         this.message = message;
-        this.user = user;
+        this.person = person;
         this.room = room;
     }
 
@@ -36,13 +36,13 @@ public class Message {
         return Objects.equals(id, message1.id) &&
                 Objects.equals(message, message1.message) &&
                 Objects.equals(createDate, message1.createDate) &&
-                Objects.equals(user, message1.user) &&
+                Objects.equals(person, message1.person) &&
                 Objects.equals(room, message1.room);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, message, createDate, user, room);
+        return Objects.hash(id, message, createDate, person, room);
     }
 
     public Integer getId() {
@@ -69,12 +69,12 @@ public class Message {
         this.createDate = createDate;
     }
 
-    public User getUser() {
-        return user;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public Room getRoom() {

@@ -16,8 +16,8 @@ public class Room {
     private Date create_date;
     private Integer status;
 
-    @ManyToOne(targetEntity = User.class)
-    private User creator;
+    @ManyToOne(targetEntity = Person.class)
+    private Person creator;
 
     @ManyToMany
     @JoinTable(name = "rooms_roles_access",
@@ -91,11 +91,11 @@ public class Room {
         this.status = status;
     }
 
-    public User getCreator() {
+    public Person getCreator() {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(Person creator) {
         this.creator = creator;
     }
 }
